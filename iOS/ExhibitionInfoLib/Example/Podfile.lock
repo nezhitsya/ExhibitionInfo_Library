@@ -1,0 +1,16 @@
+PODS:
+  - ExhibitionInfoLib (0.1.0)
+
+DEPENDENCIES:
+  - ExhibitionInfoLib (from `../`)
+
+EXTERNAL SOURCES:
+  ExhibitionInfoLib:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ExhibitionInfoLib: 7950dcc18d336b058bc0bb0439f0d212ea0ce6b9
+
+PODFILE CHECKSUM: 5b2162010ab6dfd66574ddbf6120b90d9010a055
+
+COCOAPODS: 1.11.2
