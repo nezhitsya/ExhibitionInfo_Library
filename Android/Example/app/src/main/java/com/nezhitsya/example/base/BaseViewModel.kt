@@ -11,8 +11,6 @@ open class BaseViewModel: ViewModel() {
     val showToast = SingleLiveEvent<String>()
     val showDialog = SingleLiveEvent<String>()
     val showActionDialog = SingleLiveEvent<Pair<String, () -> Unit>>()
-    val eventLog = SingleLiveEvent<Pair<String, String>>()
-    val enableSecureFlag = SingleLiveEvent<Boolean>()
 
     private fun showProgress() {
         showProgress.value = true
@@ -40,10 +38,6 @@ open class BaseViewModel: ViewModel() {
         viewModelScope.launch {
             block.invoke(this)
         }
-    }
-
-    fun sendEvent(eventType: String, log: String) {
-        eventLog.postValue(Pair(eventType, log))
     }
 
 }
