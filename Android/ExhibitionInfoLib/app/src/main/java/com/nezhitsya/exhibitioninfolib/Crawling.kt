@@ -12,6 +12,7 @@ class Crawling {
     var offDateList = JSONArray()
     var offPlaceList = JSONArray()
     var offMapList = JSONArray()
+    var offPriceList = JSONArray()
 
     var onTitleList = JSONArray()
     var onImageList = JSONArray()
@@ -36,7 +37,8 @@ class Crawling {
             val imageLink: Elements = html.select("a.img_box").select("img")
             val dateLink: Elements = html.select("dl.info_group").select("dd.no_ellip")
             val placeLink: Elements = html.select("dl.info_group").select("dd.no_ellip").select("a")
-            val mapLink: Elements = html.select("div.button_area").select("a")
+            val mapLink: Elements = html.select("div.button_area").select("a.btn_place")
+            val priceLink: Elements = html.select("div.button_area")
 
             for (i in titleLink) {
                 offTitleList.put(i.text())
@@ -58,6 +60,14 @@ class Crawling {
 
             for (i in mapLink) {
                 offMapList.put(i.attr("href"))
+            }
+
+            for (i in priceLink) {
+                if (i.select("a.btn_booking") != null) {
+                    offPriceList.put(i.select("a.btn_booking").attr("href"))
+                } else {
+                    offPriceList.put("")
+                }
             }
 
             page += 4
