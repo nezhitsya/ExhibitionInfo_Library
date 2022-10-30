@@ -15,6 +15,7 @@ public class Crawling: NSObject {
     public static var offDateList = [String]()
     public static var offPlaceList = [String]()
     public static var offMapList = [String]()
+    public static var offPriceList = [String]()
     
     public static var onTitleList = [String]()
     public static var onImageList = [String]()
@@ -55,7 +56,8 @@ public class Crawling: NSObject {
                 let imageLink: Elements = try doc.select("a.img_box").select("img")
                 let dateLink: Elements = try doc.select("dl.info_group").select("dd.no_ellip")
                 let placeLink: Elements = try doc.select("dl.info_group").select("dd.no_ellip").select("a")
-                let mapLink: Elements = try doc.select("div.button_area").select("a")
+                let mapLink: Elements = try doc.select("div.button_area").select("a.btn_place")
+                let priceLink: Elements = try doc.select("div.button_area")
                 
                 for i in titleLink.array() {
                     try offTitleList.append(i.text())
@@ -77,6 +79,14 @@ public class Crawling: NSObject {
                 
                 for i in mapLink.array() {
                     try offMapList.append(i.attr("href"))
+                }
+                
+                for i in priceLink.array() {
+                    if (i.select("a.btn_booking") != nil) {
+                        try offPriceList.append(i.select("a.btn_booking").attr("href"))
+                    } else {
+                        try offPriceList.append("")
+                    }
                 }
                 
                 page += 4
