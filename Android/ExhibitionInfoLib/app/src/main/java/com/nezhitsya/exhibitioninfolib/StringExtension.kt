@@ -3,7 +3,7 @@ package com.nezhitsya.exhibitioninfolib
 class StringExtension {
 
     fun htmlEncodedString(s: String): String {
-        var yourNewString = s.toString().replace("\\n", "")
+        var yourNewString = s.replace("\\n", "")
         yourNewString = yourNewString.replace("\\t", "")
         yourNewString = yourNewString.replace("&quot;", "")
         yourNewString = yourNewString.replace("&amp;", "&")

@@ -1,7 +1,6 @@
 package com.nezhitsya.example.base
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -19,8 +18,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.navigation.Navigation
-import com.nezhitsya.example.R
 import com.nezhitsya.example.utils.CommonDialog
 import com.nezhitsya.example.viewModel.PermissionViewModel
 import kotlinx.coroutines.CoroutineScope
