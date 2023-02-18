@@ -1,6 +1,7 @@
 package com.nezhitsya.example.base
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -70,9 +71,9 @@ open class BaseActivity: AppCompatActivity(), CoroutineScope {
         job.cancel()
     }
 
-    fun navigation(id: Int) {
+//    fun navigation(id: Int) {
 //        Navigation.findNavController(this, R.layout.fragment_container).navigate(id)
-    }
+//    }
 
     fun setViewModel(viewModelList: List<BaseViewModel>) {
         viewModelList.forEach { viewModel ->
