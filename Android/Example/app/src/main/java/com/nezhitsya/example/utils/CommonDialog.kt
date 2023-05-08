@@ -38,8 +38,8 @@ class CommonDialog(
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
 
-        dialogBinding.tvDlgContent.movementMethod = object : ScrollingMovementMethod(){}
-        dialogBinding.tvDlgContent.text = msg
+        dialogBinding.dialogContent.movementMethod = object : ScrollingMovementMethod(){}
+        dialogBinding.dialogContent.text = msg
         btnText?.let {
             dialogBinding.btnDlgOk.text = it.first
             if (it.first.isEmpty()) {

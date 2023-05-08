@@ -5,5 +5,6 @@ data class OfflineExhibition(
     var image: String,
     var date: String,
     var place: String,
-    var map: String
+    var map: String,
+    var price: String
 )
