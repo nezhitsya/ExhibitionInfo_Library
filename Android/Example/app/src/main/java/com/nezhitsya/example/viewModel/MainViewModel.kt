@@ -12,24 +12,17 @@ class MainViewModel: BaseViewModel() {
     val onlineExhibition = SingleLiveEvent<Pair<String, JSONArray>>()
 
     init {
-        crawling.offlineExhibition()
-        crawling.onlineExhibition()
+        Thread {
+            crawling.offlineExhibition()
+            crawling.onlineExhibition()
 
-        load()
+            load()
+        }.start()
     }
 
     private fun load() {
-        offlineExhibition.postValue(Pair("title", crawling.offTitleList))
-        offlineExhibition.postValue(Pair("image", crawling.offImageList))
-        offlineExhibition.postValue(Pair("date", crawling.offDateList))
-        offlineExhibition.postValue(Pair("place", crawling.offPlaceList))
-        offlineExhibition.postValue(Pair("map", crawling.offMapList))
-        offlineExhibition.postValue(Pair("price", crawling.offPriceList))
-
-        onlineExhibition.postValue(Pair("title", crawling.onTitleList))
-        onlineExhibition.postValue(Pair("image", crawling.onImageList))
-        onlineExhibition.postValue(Pair("date", crawling.onDateList))
-        onlineExhibition.postValue(Pair("view", crawling.onViewList))
+        offlineExhibition.postValue(Pair("offline", crawling.totalOfflineList))
+        onlineExhibition.postValue(Pair("online", crawling.totalOnlineList))
     }
 
 }

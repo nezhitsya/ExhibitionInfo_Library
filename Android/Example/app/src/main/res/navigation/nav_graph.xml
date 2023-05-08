@@ -9,8 +9,8 @@
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main" />
 
-    <fragment
-        android:id="@+id/myExhibitionFragment"
-        tools:layout="@layout/fragment_my_exhibition" />
+<!--    <fragment-->
+<!--        android:id="@+id/myExhibitionFragment"-->
+<!--        tools:layout="@layout/fragment_my_exhibition" />-->
 
 </navigation>
