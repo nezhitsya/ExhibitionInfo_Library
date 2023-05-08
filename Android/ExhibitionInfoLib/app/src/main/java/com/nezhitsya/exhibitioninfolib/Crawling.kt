@@ -7,17 +7,11 @@ import org.jsoup.select.Elements
 
 class Crawling {
 
-    var offTitleList = JSONArray()
-    var offImageList = JSONArray()
-    var offDateList = JSONArray()
-    var offPlaceList = JSONArray()
-    var offMapList = JSONArray()
-    var offPriceList = JSONArray()
+    private var offlineList = JSONArray()
+    var totalOfflineList = JSONArray()
 
-    var onTitleList = JSONArray()
-    var onImageList = JSONArray()
-    var onDateList = JSONArray()
-    var onViewList = JSONArray()
+    private var onlineList = JSONArray()
+    var totalOnlineList = JSONArray()
 
     fun offlineExhibition() {
         var page = 1
@@ -26,7 +20,6 @@ class Crawling {
         var texts = firstDoc.toString().split(":")
         texts = texts[1].split(",")
         val totalPage = texts[0].replace(" ", "").toInt()
-        Log.d("jsoup", totalPage.toString())
 
         while (page < totalPage * 4) {
             val exhibitionScript = "https://m.search.naver.com/p/csearch/content/nqapirender.nhn?fileKey=exhibitionKBListAPI&u9=4&_callback=_exhibitionKBListAPI_fileKey_4_u9__u1__u4_${page}_u8_nexearch_where_360_pkid&u1=&u4=&u8=${page}&where=nexearch&pkid=360"
@@ -40,34 +33,26 @@ class Crawling {
             val mapLink: Elements = html.select("div.button_area").select("a.btn_place")
             val priceLink: Elements = html.select("div.button_area")
 
-            for (i in titleLink) {
-                offTitleList.put(i.text())
-            }
+            try {
+                for (i in 0 until titleLink.size) {
+                    offlineList.put(titleLink[i].text())
+                    offlineList.put(imageLink[i].attr("src"))
+                    if (dateLink[i].text().startsWith("2") && dateLink[i].text().endsWith(".")) {
+                        offlineList.put(dateLink[i].text())
+                    }
+                    offlineList.put(placeLink[i].text())
+                    offlineList.put(mapLink[i].attr("href"))
+                    if (priceLink[i]?.select("a.btn_booking") != null) {
+                        offlineList.put(priceLink[i].select("a.btn_booking").attr("href"))
+                    } else {
+                        offlineList.put("")
+                    }
 
-            for (i in imageLink) {
-                offImageList.put(i.attr("src"))
-            }
-
-            for (i in dateLink) {
-                if (i.text().startsWith("2") && i.text().endsWith(".")) {
-                    offDateList.put(i.text())
+                    totalOfflineList.put(offlineList)
+                    offlineList = JSONArray()
                 }
-            }
-
-            for (i in placeLink) {
-                offPlaceList.put(i.text())
-            }
-
-            for (i in mapLink) {
-                offMapList.put(i.attr("href"))
-            }
-
-            for (i in priceLink) {
-                if (i.select("a.btn_booking") != null) {
-                    offPriceList.put(i.select("a.btn_booking").attr("href"))
-                } else {
-                    offPriceList.put("")
-                }
+            } catch (e: Exception) {
+                Log.d("crawling error", e.stackTraceToString())
             }
 
             page += 4
@@ -81,7 +66,6 @@ class Crawling {
         var texts = firstDoc.toString().split(":")
         texts = texts[1].split(",")
         val totalPage = texts[0].replace(" ", "").toInt()
-        Log.d("jsoup", totalPage.toString())
 
         while (page < totalPage * 4) {
             val exhibitionScript =
@@ -94,27 +78,24 @@ class Crawling {
             val dateLink: Elements = html.select("dl.info_group").select("dd.no_ellip")
             val viewLink: Elements = html.select("div.button_area").select("a")
 
-            for (i in titleLink) {
-                onTitleList.put(i.text())
-            }
+            try {
+                for (i in 0 until titleLink.size) {
+                    onlineList.put(titleLink[i].text())
+                    onlineList.put(imageLink[i].attr("src"))
+                    if (dateLink[i].text().startsWith("2") && dateLink[i].text().endsWith(".")) {
+                        onlineList.put(dateLink[i].text())
+                    }
+                    onlineList.put(viewLink[i].attr("href"))
 
-            for (i in imageLink) {
-                onImageList.put(i.attr("src"))
-            }
-
-            for (i in dateLink) {
-                if (i.text().startsWith("2") && i.text().endsWith(".")) {
-                    onDateList.put(i.text())
+                    totalOnlineList.put(onlineList)
+                    onlineList = JSONArray()
                 }
-            }
-
-            for (i in viewLink) {
-                onViewList.put(i.attr("href"))
+            } catch (e: Exception) {
+                Log.d("crawling error", e.stackTraceToString())
             }
 
             page += 4
         }
-
     }
 
 }
