@@ -37,10 +37,10 @@ class Crawling {
                 for (i in 0 until titleLink.size) {
                     offlineList.put(titleLink[i].text())
                     offlineList.put(imageLink[i].attr("src"))
-                    if (dateLink[i].text().startsWith("2") && dateLink[i].text().endsWith(".")) {
-                        offlineList.put(dateLink[i].text())
+                    if (dateLink[i * 2].text().startsWith("2") && dateLink[i * 2].text().endsWith(".")) {
+                        offlineList.put(dateLink[i * 2].text())
                     }
-                    offlineList.put(placeLink[i].text())
+                    offlineList.put(placeLink[(i + 1) * 3 - 1].attr("href"))
                     offlineList.put(mapLink[i].attr("href"))
                     if (priceLink[i]?.select("a.btn_booking") != null) {
                         offlineList.put(priceLink[i].select("a.btn_booking").attr("href"))
