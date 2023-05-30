@@ -25,7 +25,7 @@ class CommonDialog(
     fun show() {
         val dialogBinding = DataBindingUtil.inflate<CommonDialogLayoutBinding>(
             LayoutInflater.from(context),
-            R.layout.common_dialog_layout,
+            R.layout.layout_dialog,
             null,
             false
         )

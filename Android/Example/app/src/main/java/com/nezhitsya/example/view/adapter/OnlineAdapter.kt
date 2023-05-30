@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nezhitsya.example.R
 import com.nezhitsya.example.base.SingleLiveEvent
@@ -17,7 +15,7 @@ class OnlineAdapter(val context: Context, private val onlineLiveData: SingleLive
     private lateinit var callback: (OnlineExhibition) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.exhibition_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_exhibition_item, parent, false)
 //        return Holder(view).also {
 //            it.itemView.setOnClickListener { _ ->
 //                callback(onlineLiveData)
