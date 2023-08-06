@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -10,16 +12,21 @@ android {
 
     defaultConfig {
         applicationId "com.nezhitsya.example"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -33,6 +40,19 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def df = new SimpleDateFormat("yyyyMMdd")
+            df.setTimeZone(TimeZone.getDefault())
+
+            def newName = "Exhibition_${variant.versionName}"
+            newName += "_${df.format(new Date())}.apk"
+
+            println "$newName"
+            outputFileName = "$newName"
+        }
     }
 }
 

@@ -7,4 +7,5 @@
     <color name="dark_gray">#6F634F</color>
     <color name="dark_blue">#393E46</color>
     <color name="orange">#EB6440</color>
+    <color name="default_text_color">#808080</color>
 </resources>
