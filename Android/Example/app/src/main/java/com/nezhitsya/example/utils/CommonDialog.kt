@@ -10,7 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import com.nezhitsya.example.R
-import com.nezhitsya.example.databinding.CommonDialogLayoutBinding
+import com.nezhitsya.example.databinding.LayoutDialogBinding
 
 class CommonDialog(
     private val context: Context,
@@ -23,7 +23,7 @@ class CommonDialog(
     private val dialog = Dialog(context)
 
     fun show() {
-        val dialogBinding = DataBindingUtil.inflate<CommonDialogLayoutBinding>(
+        val dialogBinding = DataBindingUtil.inflate<LayoutDialogBinding>(
             LayoutInflater.from(context),
             R.layout.layout_dialog,
             null,
