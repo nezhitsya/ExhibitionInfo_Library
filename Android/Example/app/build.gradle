@@ -69,9 +69,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'androidx.biometric:biometric:1.2.0-alpha04'
 
-    // kakao link
-    implementation "com.kakao.sdk:v2-share:2.11.2"
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -84,4 +81,10 @@ dependencies {
     // Room Persistence Library
     implementation 'androidx.room:room-runtime:2.3.0'
     kapt 'androidx.room:room-compiler:2.3.0'
+
+    // kakao link
+    implementation "com.kakao.sdk:v2-share:2.11.2"
+
+    // Image load library - picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

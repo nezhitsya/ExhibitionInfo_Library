@@ -1,14 +1,12 @@
 package com.nezhitsya.example.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
 import com.nezhitsya.example.R
 import com.nezhitsya.example.base.BaseFragment
 import com.nezhitsya.example.databinding.FragmentMainOnlineBinding
@@ -29,19 +27,21 @@ class MainOnlineFragment : BaseFragment() {
         mainBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_main_online, container, false)
 
         mainBinding.recyclerviewOnline.setHasFixedSize(true)
-        mainBinding.recyclerviewOnline.adapter = adapter
-        val linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
-        mainBinding.recyclerviewOnline.layoutManager = linearLayoutManager
+//        val linearLayoutManager = LinearLayoutManager(context)
+//        linearLayoutManager.reverseLayout = true
+//        linearLayoutManager.stackFromEnd = true
+//        mainBinding.recyclerviewOnline.layoutManager = linearLayoutManager
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        mainBinding.recyclerviewOnline.layoutManager = gridLayoutManager
 
         return mainBinding.root
     }
 
     override fun setObserver() {
         mainViewModel.onlineExhibition.observe(this, {
-            Log.d("leedy", it.toString())
-
+            adapter = OnlineAdapter(requireContext(), it)
+            mainBinding.recyclerviewOnline.adapter = adapter
         })
     }
 

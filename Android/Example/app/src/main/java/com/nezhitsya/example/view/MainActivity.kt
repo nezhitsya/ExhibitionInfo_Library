@@ -1,7 +1,6 @@
 package com.nezhitsya.example.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.nezhitsya.example.R
 import com.nezhitsya.example.base.BaseActivity

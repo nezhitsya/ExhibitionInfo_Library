@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Example</string>
+    <string name="app_name">Exhibition</string>
     <string name="btn_ok">확인</string>
     <string name="btn_cancel">취소</string>
     <!-- kakao link setting -->
