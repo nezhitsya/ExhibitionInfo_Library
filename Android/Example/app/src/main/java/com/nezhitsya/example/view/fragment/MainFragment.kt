@@ -117,20 +117,29 @@ class MainFragment: BaseFragment() {
 
         mainBinding.categoryDetailAll.setOnClickListener {
             mainBinding.categoryDetailAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
+            mainBinding.categoryDetailAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             mainBinding.categoryFree.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
         }
 
         mainBinding.categoryFree.setOnClickListener {
             mainBinding.categoryDetailAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryDetailAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryFree.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
+            mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
         }
 
         mainBinding.categoryPayment.setOnClickListener {
             mainBinding.categoryDetailAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryDetailAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryFree.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
+            mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
+            mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         }
     }
 
