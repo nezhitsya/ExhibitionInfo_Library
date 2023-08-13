@@ -28,6 +28,9 @@ class MainFragment: BaseFragment() {
     private var offlineData: Pair<String, JSONArray>? = null
     private var onlineData: Pair<String, JSONArray>? = null
 
+    private var mainCategory = "all"
+    private var detailCategory = "all"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,15 +74,28 @@ class MainFragment: BaseFragment() {
         checkPermission()
 
         mainBinding.categoryAll.setOnClickListener {
+            sortData()
             mainBinding.categoryAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
             mainBinding.categoryAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             mainBinding.categoryOffline.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryOffline.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryOnline.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryOnline.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
+
+            mainCategory = "all"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
+                val fragment = DetailOfflineFragment.newInstance(selectedItem)
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            mainBinding.recyclerviewAll.adapter = adapter
         }
 
         mainBinding.categoryOffline.setOnClickListener {
+            sortData()
             mainBinding.categoryAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryOffline.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
@@ -87,7 +103,9 @@ class MainFragment: BaseFragment() {
             mainBinding.categoryOnline.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryOnline.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
 
-            val adapter = OnlineAdapter(requireContext(), offlineData!!) { selectedItem ->
+            mainCategory = "offline"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
                 val fragment = DetailOfflineFragment.newInstance(selectedItem)
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
@@ -98,6 +116,7 @@ class MainFragment: BaseFragment() {
         }
 
         mainBinding.categoryOnline.setOnClickListener {
+            sortData()
             mainBinding.categoryAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryAll.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryOffline.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
@@ -105,7 +124,9 @@ class MainFragment: BaseFragment() {
             mainBinding.categoryOnline.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
             mainBinding.categoryOnline.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-            val adapter = OnlineAdapter(requireContext(), onlineData!!) { selectedItem ->
+            mainCategory = "online"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
                 val fragment = DetailOnlineFragment.newInstance(selectedItem)
                 (context as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
@@ -122,6 +143,17 @@ class MainFragment: BaseFragment() {
             mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
+
+            detailCategory = "all"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
+                val fragment = DetailOfflineFragment.newInstance(selectedItem)
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            mainBinding.recyclerviewAll.adapter = adapter
         }
 
         mainBinding.categoryFree.setOnClickListener {
@@ -131,6 +163,17 @@ class MainFragment: BaseFragment() {
             mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.default_text_color))
             mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
+
+            detailCategory = "free"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
+                val fragment = DetailOfflineFragment.newInstance(selectedItem)
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            mainBinding.recyclerviewAll.adapter = adapter
         }
 
         mainBinding.categoryPayment.setOnClickListener {
@@ -140,6 +183,17 @@ class MainFragment: BaseFragment() {
             mainBinding.categoryFree.paintFlags = Paint.UNDERLINE_TEXT_FLAG.dec()
             mainBinding.categoryPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_blue))
             mainBinding.categoryPayment.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+
+            detailCategory = "pay"
+
+            val adapter = OnlineAdapter(requireContext(), Pair("", sortData())) { selectedItem ->
+                val fragment = DetailOfflineFragment.newInstance(selectedItem)
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            mainBinding.recyclerviewAll.adapter = adapter
         }
     }
 
@@ -151,6 +205,86 @@ class MainFragment: BaseFragment() {
                 android.Manifest.permission.INTERNET,
             )
         )
+    }
+
+    private fun sortData(): JSONArray {
+        when (mainCategory) {
+            "all" -> {
+                val dataList = JSONArray()
+                for (i in 0 until onlineData!!.second.length()) {
+                    dataList.put(onlineData!!.second.getJSONArray(i))
+                }
+                for (i in 0 until offlineData!!.second.length()) {
+                    dataList.put(offlineData!!.second.getJSONArray(i))
+                }
+
+                when (detailCategory) {
+                    "all" -> {
+                        val comparator = Comparator<JSONArray> { array1, array2 ->
+                            val value1 = array1.getString(0)
+                            val value2 = array2.getString(0)
+                            value1.compareTo(value2)
+                        }
+                        val innerArrays = (0 until dataList.length())
+                            .map { dataList.getJSONArray(it) }
+                            .sortedWith(comparator)
+                        return JSONArray(innerArrays)
+                    }
+                    "pay" -> {
+                        val filteredArray = JSONArray()
+                        for (i in 0 until dataList.length()) {
+                            val innerArray = dataList.getJSONArray(i)
+                            if (innerArray.length() > 5 && innerArray.getString(5) != "") {
+                                filteredArray.put(innerArray)
+                            }
+                        }
+                        return filteredArray
+                    }
+                    "free" -> {
+                        val filteredArray = JSONArray()
+                        for (i in 0 until dataList.length()) {
+                            val innerArray = dataList.getJSONArray(i)
+                            if (innerArray.length() > 5 && innerArray.getString(5) == "") {
+                                filteredArray.put(innerArray)
+                            }
+                        }
+                        return filteredArray
+                    }
+                }
+            }
+            "offline" -> {
+                val offlineList = offlineData!!.second
+                when (detailCategory) {
+                    "all" -> {
+                        return offlineList
+                    }
+                    "pay" -> {
+                        val filteredArray = JSONArray()
+                        for (i in 0 until offlineList.length()) {
+                            val innerArray = offlineList.getJSONArray(i)
+                            if (innerArray.length() > 5 && innerArray.getString(5) != "") {
+                                filteredArray.put(innerArray)
+                            }
+                        }
+                        return filteredArray
+                    }
+                    "free" -> {
+                        val filteredArray = JSONArray()
+                        for (i in 0 until offlineList.length()) {
+                            val innerArray = offlineList.getJSONArray(i)
+                            if (innerArray.length() > 5 && innerArray.getString(5) == "") {
+                                filteredArray.put(innerArray)
+                            }
+                        }
+                        return filteredArray
+                    }
+                }
+            }
+            "online" -> {
+                return onlineData!!.second
+            }
+        }
+        return JSONArray()
     }
 
 }
